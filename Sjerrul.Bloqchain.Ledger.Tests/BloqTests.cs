@@ -6,13 +6,66 @@ namespace Sjerrul.Bloqchain.Ledger.TEsts
     public class BloqTests
     {
         [Fact]
+        public void Ctor_DefaultHashIsGenesisHash()
+        {
+            // Arrange
+            int index = 3;
+            DateTime timestamp = DateTime.UtcNow;
+            string data = "Hello, I'm some data";
+
+            // Act
+            var bloq = new Bloq<string>(index, timestamp, data);
+
+            // Assert
+            Assert.Equal("0000000000000000000000000000000000000000000000000000000000000000", bloq.PreviousHash);
+        }
+
+        [Fact]
+        public void Ctor_DefaultData_String_Throws()
+        {
+            // Arrange
+            int index = 3;
+            DateTime timestamp = DateTime.UtcNow;
+            string data = null;
+
+            //  Act and Assert
+            Assert.Throws<ArgumentException>(() => new Bloq<string>(index, timestamp, data));
+        }
+
+        [Fact]
+        public void Ctor_PreviousHashNull_Throws()
+        {
+            // Arrange
+            int index = 3;
+            DateTime timestamp = DateTime.UtcNow;
+            string data = null;
+            string previousHash = null;
+
+            //  Act and Assert
+            Assert.Throws<ArgumentException>(() => new Bloq<string>(index, timestamp, data, previousHash));
+        }
+
+        [Fact]
+        public void Ctor_EmptyHashNull_Throws()
+        {
+            // Arrange
+            int index = 3;
+            DateTime timestamp = DateTime.UtcNow;
+            string data = null;
+            string previousHash = string.Empty;
+
+            //  Act and Assert
+            Assert.Throws<ArgumentException>(() => new Bloq<string>(index, timestamp, data, previousHash));
+        }
+
+        [Fact]
         public void CalculateHash_AllSameDataInBloq_GivesSameHash()
         {
             // Arrange
             int index = 3;
             DateTime timestamp = DateTime.UtcNow;
             string data = "Hello, I'm some data";
-            string previousHash = string.Empty;
+            string previousHash = "41aa65db55b7bfd4af15c2945d3943c202ee77728719fed39703a2f03855c703";
 
             var bloq1 = new Bloq<string>(index, timestamp, data, previousHash);
             var bloq2 = new Bloq<string>(index, timestamp, data, previousHash);
@@ -31,7 +84,7 @@ namespace Sjerrul.Bloqchain.Ledger.TEsts
             // Arrange
             DateTime timestamp = DateTime.UtcNow;
             string data = "Hello, I'm some data";
-            string previousHash = string.Empty;
+            string previousHash = "41aa65db55b7bfd4af15c2945d3943c202ee77728719fed39703a2f03855c703";
 
             var bloq1 = new Bloq<string>(1, timestamp, data, previousHash);
             var bloq2 = new Bloq<string>(2, timestamp, data, previousHash);
@@ -50,7 +103,7 @@ namespace Sjerrul.Bloqchain.Ledger.TEsts
             // Arrange
             int index = 5;
             string data = "Hello, I'm some data";
-            string previousHash = string.Empty;
+            string previousHash = "41aa65db55b7bfd4af15c2945d3943c202ee77728719fed39703a2f03855c703";
 
             var bloq1 = new Bloq<string>(index, DateTime.UtcNow.AddDays(1), data, previousHash);
             var bloq2 = new Bloq<string>(index, DateTime.UtcNow.AddDays(-1), data, previousHash);
@@ -69,7 +122,7 @@ namespace Sjerrul.Bloqchain.Ledger.TEsts
             // Arrange
             int index = 5;
             DateTime timestamp = DateTime.UtcNow;
-            string previousHash = string.Empty;
+            string previousHash = "41aa65db55b7bfd4af15c2945d3943c202ee77728719fed39703a2f03855c703";
 
             var bloq1 = new Bloq<string>(index, timestamp, "Hello, I'm some data", previousHash);
             var bloq2 = new Bloq<string>(index, timestamp, "Hello, I'm some other data", previousHash);

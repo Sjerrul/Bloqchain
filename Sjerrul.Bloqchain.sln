@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.27428.2011
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sjerrul.Bloqchain.Ledger", "Sjerrul.Bloqchain.Ledger\Sjerrul.Bloqchain.Ledger.csproj", "{1C7C77F8-42A8-4581-8999-F58AE11F6B83}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sjerrul.Bloqchain.Ledger.TEsts", "Sjerrul.Bloqchain.Ledger.TEsts\Sjerrul.Bloqchain.Ledger.TEsts.csproj", "{06ED9DA2-B40B-44CA-B0AB-7C73950B7D40}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sjerrul.Bloqchain.Ledger.Tests", "Sjerrul.Bloqchain.Ledger.Tests\Sjerrul.Bloqchain.Ledger.Tests.csproj", "{3AE88BBD-1B48-4575-A5E9-05DC2BBB11E7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{1C7C77F8-42A8-4581-8999-F58AE11F6B83}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1C7C77F8-42A8-4581-8999-F58AE11F6B83}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1C7C77F8-42A8-4581-8999-F58AE11F6B83}.Release|Any CPU.Build.0 = Release|Any CPU
-		{06ED9DA2-B40B-44CA-B0AB-7C73950B7D40}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{06ED9DA2-B40B-44CA-B0AB-7C73950B7D40}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{06ED9DA2-B40B-44CA-B0AB-7C73950B7D40}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{06ED9DA2-B40B-44CA-B0AB-7C73950B7D40}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3AE88BBD-1B48-4575-A5E9-05DC2BBB11E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3AE88BBD-1B48-4575-A5E9-05DC2BBB11E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3AE88BBD-1B48-4575-A5E9-05DC2BBB11E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3AE88BBD-1B48-4575-A5E9-05DC2BBB11E7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
