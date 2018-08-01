@@ -8,28 +8,23 @@ namespace Sjerrul.Bloqchain.Ledger.TEsts
         [Fact]
         public void Ctor_DefaultHashIsGenesisHash()
         {
-            // Arrange
-            int index = 3;
-            DateTime timestamp = DateTime.UtcNow;
-            string data = "Hello, I'm some data";
-
             // Act
-            var bloq = new Bloq<string>(index, timestamp, data);
+            var bloq = new Bloq<string>();
 
             // Assert
             Assert.Equal("0000000000000000000000000000000000000000000000000000000000000000", bloq.PreviousHash);
         }
 
         [Fact]
-        public void Ctor_DefaultData_String_Throws()
+        public void Ctor_NegativeIndex_Throws()
         {
             // Arrange
-            int index = 3;
+            int index = -1;
             DateTime timestamp = DateTime.UtcNow;
-            string data = null;
+            string data = "Hello, I'm some data";
 
-            //  Act and Assert
-            Assert.Throws<ArgumentException>(() => new Bloq<string>(index, timestamp, data));
+            // Act and Assert
+            Assert.Throws<ArgumentOutOfRangeException>(() => new Bloq<string>(index, timestamp, data, "PreviousHash"));
         }
 
         [Fact]
@@ -42,7 +37,7 @@ namespace Sjerrul.Bloqchain.Ledger.TEsts
             string previousHash = null;
 
             //  Act and Assert
-            Assert.Throws<ArgumentException>(() => new Bloq<string>(index, timestamp, data, previousHash));
+            Assert.Throws<ArgumentNullException>(() => new Bloq<string>(index, timestamp, data, previousHash));
         }
 
         [Fact]
@@ -55,7 +50,7 @@ namespace Sjerrul.Bloqchain.Ledger.TEsts
             string previousHash = string.Empty;
 
             //  Act and Assert
-            Assert.Throws<ArgumentException>(() => new Bloq<string>(index, timestamp, data, previousHash));
+            Assert.Throws<ArgumentNullException>(() => new Bloq<string>(index, timestamp, data, previousHash));
         }
 
         [Fact]
@@ -152,6 +147,42 @@ namespace Sjerrul.Bloqchain.Ledger.TEsts
 
             // Assert
             Assert.NotEqual(hashOfBLoq1, hashOfBLoq2);
+        }
+
+        [Fact]
+        public void IsGenesisBloq_PreviousHashIsGenesisHash_ReturnsTrue()
+        {
+            // Arrange
+            int index = 5;
+            string data = "Hello, I'm some data";
+            DateTime timestamp = DateTime.UtcNow;
+
+            var bloq = new Bloq<string>(index, timestamp, data, "Some Hash");
+            bloq.PreviousHash = BloqHashing.GetGenesisHash();
+
+            // Act
+            bool result = bloq.IsGenesisBloq;
+
+            // Assert
+            Assert.True(result);
+        }
+
+        [Fact]
+        public void IsGenesisBloq_PreviousHashIsNotGenesisHash_ReturnsTrue()
+        {
+            // Arrange
+            int index = 5;
+            string data = "Hello, I'm some data";
+            DateTime timestamp = DateTime.UtcNow;
+
+            var bloq = new Bloq<string>(index, timestamp, data, "Some Hash");
+            bloq.PreviousHash = "Some Hash";
+
+            // Act
+            bool result = bloq.IsGenesisBloq;
+
+            // Assert
+            Assert.False(result);
         }
     }
 }

@@ -8,34 +8,48 @@ namespace Sjerrul.Bloqchain.Ledger
 {
     public class Bloq<T>
     {
-        private readonly int index;
-        private readonly DateTime timestamp;
-        private readonly T data;
-        public string PreviousHash { get; private set; }
+        public int Index { get; set; }
+        public DateTime Timestamp { get; set; }
+        public T Data { get; set; }
+        public string Hash { get; set; }
+        public string PreviousHash { get; set; }
         public bool IsGenesisBloq => this.PreviousHash == BloqHashing.GetGenesisHash();
 
-
-        public Bloq(int index, DateTime timestamp, T data)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Bloq{T}"/> class as a GenesisBloq.
+        /// </summary>
+        public Bloq()
         {
-            if (EqualityComparer<T>.Default.Equals(data, default(T)))
-            {
-                throw new ArgumentException("The data for this is the default for the type. Use actual data for the bloq", nameof(data));
-            }
-
-            this.index = index;
-            this.timestamp = timestamp;
-            this.data = data;
+            this.Index = 0;
+            this.Timestamp = DateTime.UtcNow;
+            this.Data = default(T);
             this.PreviousHash = BloqHashing.GetGenesisHash();
+            this.Hash = this.CalculateHash();
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Bloq{T}"/> class.
+        /// </summary>
+        /// <param name="index">The index.</param>
+        /// <param name="timestamp">The timestamp.</param>
+        /// <param name="data">The data.</param>
+        /// <param name="previousHash">The previous hash.</param>
         public Bloq(int index, DateTime timestamp, T data, string previousHash)
-            : this(index, timestamp, data)
+            : this()
         {
+            if (index <= 0)
+            {
+                throw new ArgumentOutOfRangeException($"Index cannot be 0 or negative, but is {index}");
+            }
+
             if (string.IsNullOrWhiteSpace(previousHash))
             {
                 throw new ArgumentNullException(nameof(previousHash));
             }
 
+            this.Index = index;
+            this.Timestamp = timestamp;
+            this.Data = data;
             this.PreviousHash = previousHash;
         }
 
@@ -55,21 +69,11 @@ namespace Sjerrul.Bloqchain.Ledger
             return hash.ToString();
         }
 
-        public void SetPreviousHash(string previousHash)
-        {
-            if (string.IsNullOrWhiteSpace(previousHash))
-            {
-                throw new ArgumentNullException(nameof(previousHash));
-            }
-
-            this.PreviousHash = previousHash;
-        }
-
         private string Stringify()
         {
-            string json = JsonConvert.SerializeObject(this.data);
+            string json = JsonConvert.SerializeObject(this.Data);
 
-            return $"{this.index}{this.timestamp.Ticks}{json}{PreviousHash}";
+            return $"{this.Index}{this.Timestamp.Ticks}{json}{this.PreviousHash}";
         }
     }
 }
