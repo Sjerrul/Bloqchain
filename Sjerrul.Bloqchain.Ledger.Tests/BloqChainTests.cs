@@ -9,7 +9,7 @@ namespace Sjerrul.Bloqchain.Ledger.TEsts
         public void Ctor_StartsWithOnlyGenesisBloq()
         {
             // Act
-            var chain = new BloqChain<string>();
+            var chain = new BloqChain<string>(difficulty: 0);
 
             // Assert
             Assert.Equal(1, chain.Length);
@@ -19,7 +19,7 @@ namespace Sjerrul.Bloqchain.Ledger.TEsts
         public void AddBloq_NullBloq_Throws()
         {
             // Act and Assert
-            var chain = new BloqChain<string>();
+            var chain = new BloqChain<string>(difficulty: 0);
             Assert.Throws<ArgumentException>(() => chain.AddBloq(null));
         }
 
@@ -30,7 +30,7 @@ namespace Sjerrul.Bloqchain.Ledger.TEsts
             string data = "Some data";
 
             // Act
-            var chain = new BloqChain<string>();
+            var chain = new BloqChain<string>(difficulty: 0);
             chain.AddBloq(data);
 
             // Assert
@@ -41,7 +41,7 @@ namespace Sjerrul.Bloqchain.Ledger.TEsts
         public void AddBloq_DefaultData_Throws()
         { 
             // Act And Assert
-            var chain = new BloqChain<bool>();
+            var chain = new BloqChain<bool>(difficulty: 0);
             Assert.Throws<ArgumentException>(() => chain.AddBloq(default(bool)));
         }
 
@@ -51,7 +51,7 @@ namespace Sjerrul.Bloqchain.Ledger.TEsts
             // Arrange
             string data = "Some data";
 
-            var chain = new BloqChain<string>();
+            var chain = new BloqChain<string>(difficulty: 0);
             chain.AddBloq(data);
 
             // Act
@@ -70,7 +70,7 @@ namespace Sjerrul.Bloqchain.Ledger.TEsts
         public void Indexer_IndexOutOfRange_Throws()
         {
             // Arrange
-            var chain = new BloqChain<string>();
+            var chain = new BloqChain<string>(difficulty: 0);
             chain.AddBloq("Some data");
 
             // Act and Assert
@@ -81,7 +81,23 @@ namespace Sjerrul.Bloqchain.Ledger.TEsts
         public void IsValid_UntamperedInitializedChain_ReturnsTrue()
         {
             // Arrange
-            var chain = new BloqChain<string>();
+            var chain = new BloqChain<string>(difficulty: 0);
+
+            // Act
+            bool result = chain.IsValid;
+
+            // Assert
+            Assert.True(result);
+        }
+
+        [Fact]
+        public void IsValid_UntamperedChainWithBLoqAdded_ReturnsTrue()
+        {
+            // Arrange
+            string data = "Some data";
+
+            var chain = new BloqChain<string>(difficulty: 0);
+            chain.AddBloq(data);
 
             // Act
             bool result = chain.IsValid;
@@ -96,14 +112,70 @@ namespace Sjerrul.Bloqchain.Ledger.TEsts
             // Arrange
             string data = "Some data";
 
-            var chain = new BloqChain<string>();
+            var chain = new BloqChain<string>(difficulty: 0);
             chain.AddBloq(data);
 
             // Act
+            chain[1].Data = "I've changed";
+            bool result = chain.IsValid;
+
+            // Assert
+            Assert.False(result);
+        }
+
+        [Fact]
+        public void IsValid_TamperedHashWithoutRemine_ReturnsFalse()
+        {
+            // Arrange
+            string data = "Some data";
+
+            var chain = new BloqChain<string>(difficulty: 0);
+            chain.AddBloq(data);
+
+            // Act
+            chain[1].PreviousHash = "I'm changed";
+            bool result = chain.IsValid;
+
+            // Assert
+            Assert.False(result);
+        }
+
+        [Fact]
+        public void IsValid_TamperedBloqAddedWithRemine_ReturnsTrue()
+        {
+            // Arrange
+            string data = "Some data";
+
+            var chain = new BloqChain<string>(difficulty: 0);
+            chain.AddBloq(data);
+
+            // Act
+            chain[1].Data = "I'm changed";
+            chain[1].Mine(difficulty: 0);
+
             bool result = chain.IsValid;
 
             // Assert
             Assert.True(result);
+        }
+
+        [Fact]
+        public void IsValid_TamperedBloqAddedWithRemineWithDifferentDifficulty_ReturnsFalse()
+        {
+            // Arrange
+            string data = "Some data";
+
+            var chain = new BloqChain<string>(difficulty: 1);
+            chain.AddBloq(data);
+
+            // Act
+            chain[1].Data = "I'm changed";
+            chain[1].Mine(difficulty: 0);
+
+            bool result = chain.IsValid;
+
+            // Assert
+            Assert.False(result);
         }
     }
 }

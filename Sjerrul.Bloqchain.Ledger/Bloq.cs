@@ -11,6 +11,7 @@ namespace Sjerrul.Bloqchain.Ledger
         public int Index { get; set; }
         public DateTime Timestamp { get; set; }
         public T Data { get; set; }
+        public int Nonce { get; set; }
         public string Hash { get; set; }
         public string PreviousHash { get; set; }
         public bool IsGenesisBloq => this.PreviousHash == BloqHashing.GetGenesisHash();
@@ -21,6 +22,7 @@ namespace Sjerrul.Bloqchain.Ledger
         public Bloq()
         {
             this.Index = 0;
+            this.Nonce = 0;
             this.Timestamp = DateTime.UtcNow;
             this.Data = default(T);
             this.PreviousHash = BloqHashing.GetGenesisHash();
@@ -31,10 +33,11 @@ namespace Sjerrul.Bloqchain.Ledger
         /// Initializes a new instance of the <see cref="Bloq{T}"/> class.
         /// </summary>
         /// <param name="index">The index.</param>
+        /// <param name="nonce">The nonce.</param>
         /// <param name="timestamp">The timestamp.</param>
         /// <param name="data">The data.</param>
         /// <param name="previousHash">The previous hash.</param>
-        public Bloq(int index, DateTime timestamp, T data, string previousHash)
+        public Bloq(int index, int nonce, DateTime timestamp, T data, string previousHash)
             : this()
         {
             if (index <= 0)
@@ -48,12 +51,28 @@ namespace Sjerrul.Bloqchain.Ledger
             }
 
             this.Index = index;
+            this.Nonce = nonce;
             this.Timestamp = timestamp;
             this.Data = data;
             this.PreviousHash = previousHash;
         }
 
-        public string CalculateHash()
+        public void Mine(int difficulty)
+        {
+            if (difficulty < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(difficulty), "Difficulty must be zero a positive number");
+            }
+
+            string difficultyMarker = new string('0', difficulty);
+            do
+            {
+                this.Nonce++;
+                this.Hash = this.CalculateHash();
+            } while (!this.Hash.StartsWith(difficultyMarker));
+        }
+
+        internal string CalculateHash()
         {
             var crypt = new SHA256Managed();
 
@@ -73,7 +92,7 @@ namespace Sjerrul.Bloqchain.Ledger
         {
             string json = JsonConvert.SerializeObject(this.Data);
 
-            return $"{this.Index}{this.Timestamp.Ticks}{json}{this.PreviousHash}";
+            return $"{this.Index}{this.Nonce}{this.Timestamp.Ticks}{json}{this.PreviousHash}";
         }
     }
 }

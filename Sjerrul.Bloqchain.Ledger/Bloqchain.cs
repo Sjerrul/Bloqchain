@@ -8,17 +8,29 @@ namespace Sjerrul.Bloqchain.Ledger
 {
     public class BloqChain<T> : IEnumerable<Bloq<T>>
     {
+        public int Difficulty { get; private set; }
+
         private readonly IList<Bloq<T>> chain;
 
         public int Length => this.chain.Count;
 
         public bool IsValid => CalculateValidity();
 
-        public BloqChain()
+        public BloqChain(int difficulty)
         {
+            if (difficulty < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(difficulty), "Difficulty must be zero a positive number");
+            }
+
+            this.Difficulty = difficulty;
+
+            var genesisBloq = new Bloq<T>();
+            genesisBloq.Mine(this.Difficulty);
+
             this.chain = new List<Bloq<T>>
             {
-                new Bloq<T>()
+                genesisBloq
             };
         }
 
@@ -34,17 +46,24 @@ namespace Sjerrul.Bloqchain.Ledger
                 throw new ArgumentNullException(nameof(data));
             }
 
-            Bloq<T> bloqToAdd = new Bloq<T>(this.Length, DateTime.UtcNow, data, this.chain[this.Length - 1].Hash);
-            bloqToAdd.Hash = bloqToAdd.CalculateHash();
+            Bloq<T> bloqToAdd = new Bloq<T>(this.Length, 0, DateTime.UtcNow, data, this.chain[this.Length - 1].Hash);
+            bloqToAdd.Mine(this.Difficulty);
 
             this.chain.Add(bloqToAdd);
         }
 
         private bool CalculateValidity()
         {
+            string difficultyMarker = new string('0', this.Difficulty);
+
             for (int i = 0; i < this.Length; i++)
             {
                 Bloq<T> currentBloq = this.chain[i];
+
+                if (!currentBloq.Hash.StartsWith(difficultyMarker))
+                {
+                    return false;
+                }
 
                 if (currentBloq.Hash != currentBloq.CalculateHash())
                 {

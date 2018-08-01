@@ -7,7 +7,9 @@ namespace Sjerrul.Bloqchain.ConsoleDriver
     {
         static void Main(string[] args)
         {
-            BloqChain<string> chain = new BloqChain<string>();
+            int difficulty = 3;
+
+            BloqChain<string> chain = new BloqChain<string>(difficulty);
 
             chain.AddBloq("Hello");
             chain.AddBloq("Hello everyone!");
@@ -29,9 +31,8 @@ namespace Sjerrul.Bloqchain.ConsoleDriver
             Console.WriteLine($"Is valid: {chain.IsValid}");
             Console.WriteLine();
 
-
             Console.WriteLine("Recalculating Hash of Bloq 1");
-            chain[1].Hash = chain[1].CalculateHash();
+            chain[1].Mine(difficulty);
             Console.WriteLine($"Is valid: {chain.IsValid}");
             Console.WriteLine();
 
@@ -41,7 +42,7 @@ namespace Sjerrul.Bloqchain.ConsoleDriver
             Console.WriteLine();
 
             Console.WriteLine("Recalculating Hash of Bloq 2");
-            chain[2].Hash = chain[2].CalculateHash();
+            chain[2].Mine(difficulty);
             Console.WriteLine($"Is valid: {chain.IsValid}");
             Console.WriteLine();
 
