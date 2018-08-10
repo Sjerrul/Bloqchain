@@ -6,9 +6,11 @@
         xmlns:local="clr-namespace:Sjerrul.Bloqchain.Demo"
         xmlns:Sjerrul="clr-namespace:Sjerrul.Bloqchain.Demo"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        <Button Content="Button" HorizontalAlignment="Left" Margin="57,363,0,0" VerticalAlignment="Top" Width="75"/>
-        <Sjerrul:BloqControl HorizontalAlignment="Left" Height="100" Margin="132,93,0,0" VerticalAlignment="Top" Width="326"/>
+        Title="MainWindow" Height="476.393" Width="844.868">
+    <Grid x:Name="MainGrid">
+        <Button Content="New Chain" HorizontalAlignment="Left" Margin="10,0,0,10" Width="75" Click="Button_Click" Height="20" VerticalAlignment="Bottom"/>
+        <Grid x:Name="BloqGrid" Height="115" MinHeight="240" Margin="10,10,10,0" VerticalAlignment="Top"/>
+        <Button x:Name="ButtonNewBloq" Content="New Bloq" HorizontalAlignment="Left" Margin="90,0,0,10" Width="75" Click="ButtonNewBloq_Click" Height="20" VerticalAlignment="Bottom"/>
+        <Button Content="ValidateChain" HorizontalAlignment="Left" Margin="170,0,0,10" Width="75" Click="Button_Click_1" Height="20" VerticalAlignment="Bottom"/>
     </Grid>
 </Window>

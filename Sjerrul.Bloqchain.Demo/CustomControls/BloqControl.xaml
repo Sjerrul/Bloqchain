@@ -3,22 +3,34 @@
    xmlns:x = "http://schemas.microsoft.com/winfx/2006/xaml" 
    xmlns:mc = "http://schemas.openxmlformats.org/markup-compatibility/2006"  
    xmlns:d = "http://schemas.microsoft.com/expression/blend/2008"  
-   mc:Ignorable = "d" Height="83.478" Width="341.739">
+   mc:Ignorable = "d" Height="186" Width="126" MinHeight="230" MinWidth="230">
 
-    <Grid Margin="42,0,80,226">
-        <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
+    <Grid x:Name="MainGrid" Margin="0" Background="#FFF">
         <TextBox Height = "23"  
-         HorizontalAlignment = "Left"  
-         Margin = "-28,10,0,-33" Name = "txtBox"  
-         VerticalAlignment = "Top" Width = "200" Grid.Row="1" />
-
-        <Button Content = "Click Me"  
-         Height = "23" HorizontalAlignment = "Left"  
-         Margin = "123,38,0,-61" Name = "button"  
-         VerticalAlignment = "Top" Click = "button_Click" Grid.Row="1" />
+         Margin = "91,10,10,0" x:Name = "TextboxIndex"  
+         VerticalAlignment = "Top" LostFocus="TextboxIndex_LostFocus" />
+        <Label Content="Index" HorizontalAlignment="Left" Margin="0,7,0,0" VerticalAlignment="Top"/>
+        <Label Content="Timestamp" HorizontalAlignment="Left" Margin="0,33,0,0" VerticalAlignment="Top"/>
+        <Label Content="Data" HorizontalAlignment="Left" Margin="2,163,0,0" VerticalAlignment="Top"/>
+        <Label Content="Nonce" HorizontalAlignment="Left" Margin="0,59,0,0" VerticalAlignment="Top"/>
+        <Label Content="Hash" HorizontalAlignment="Left" Margin="0,85,0,0" VerticalAlignment="Top"/>
+        <Label Content="Previous Hash" HorizontalAlignment="Left" Margin="0,116,0,0" VerticalAlignment="Top"/>
+        <TextBox Height = "23"  
+            Margin = "91,36,10,0" x:Name = "TextboxTimestamp"  
+            VerticalAlignment = "Top" LostFocus="TextboxTimestamp_LostFocus" />
+        <TextBox Height = "23"  
+            Margin = "91,63,10,0" x:Name = "TextboxNonce"  
+            VerticalAlignment = "Top" LostFocus="TextboxNonce_LostFocus" />
+        <TextBox Height = "23"  
+            Margin = "91,90,10,0" x:Name = "TextboxHash"  
+            VerticalAlignment = "Top" />
+        <TextBox Height = "23"  
+            Margin = "91,116,10,0" x:Name = "TextboxPreviousHash"  
+            VerticalAlignment = "Top" LostFocus="TextboxPreviousHash_LostFocus" />
+        <TextBox Height = "23"  
+            Margin = "91,163,10,0" x:Name = "TextboxData"  
+            VerticalAlignment = "Top" LostFocus="TextboxData_LostFocus" />
+        <Button x:Name="ButtonRemine" Content="Remine" Margin="0,0,10,10" Click="ButtonRemine_Click" HorizontalAlignment="Right" Width="75" Height="20" VerticalAlignment="Bottom"/>
     </Grid>
 
 </UserControl>

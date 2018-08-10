@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Sjerrul.Bloqchain.Ledger;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -46,14 +47,90 @@ namespace Sjerrul.Bloqchain.Demo
     /// </summary>
     public partial class BloqControl : UserControl
     {
-        public BloqControl()
+        /// <summary>
+        /// The bloq that this control represents
+        /// </summary>
+        private Bloq<string> bloq;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BloqControl"/> class.
+        /// </summary>
+        /// <param name="bloq">The bloq.</param>
+        public BloqControl(Bloq<string> bloq)
         {
             InitializeComponent();
+
+            this.bloq = bloq ?? throw new ArgumentNullException(nameof(bloq));
+            this.TextboxIndex.Text = this.bloq.Index.ToString();
+            this.TextboxNonce.Text = this.bloq.Nonce.ToString();
+            this.TextboxPreviousHash.Text = this.bloq.PreviousHash;
+            this.TextboxHash.Text = this.bloq.Hash;
+            this.TextboxData.Text = this.bloq.Data;
+            this.TextboxTimestamp.Text = this.bloq.Timestamp.ToString();
         }
 
-        private void button_Click(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// Validates the validity of the bloq.
+        /// </summary>
+        public void  Validate()
         {
-            txtBox.Text = "You have just clicked the button";
+            this.MainGrid.Background = Brushes.Red;
+            if (this.bloq.IsValid)
+            {
+                this.MainGrid.Background = Brushes.Green;
+            }
+        }
+
+        /// <summary>
+        /// Handles the LostFocus event of the TextboxIndex control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+        private void TextboxIndex_LostFocus(object sender, RoutedEventArgs e)
+        {
+            this.bloq.Index = int.Parse(this.TextboxIndex.Text);
+        }
+
+        /// <summary>
+        /// Handles the LostFocus event of the TextboxData control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+        private void TextboxData_LostFocus(object sender, RoutedEventArgs e)
+        {
+            this.bloq.Data = this.TextboxData.Text;
+        }
+
+        /// <summary>
+        /// Handles the LostFocus event of the TextboxTimestamp control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+        private void TextboxTimestamp_LostFocus(object sender, RoutedEventArgs e)
+        {
+            this.bloq.Timestamp = DateTime.Parse(this.TextboxTimestamp.Text);
+        }
+
+        /// <summary>
+        /// Handles the LostFocus event of the TextboxNonce control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+        private void TextboxNonce_LostFocus(object sender, RoutedEventArgs e)
+        {
+            this.bloq.Nonce = int.Parse(this.TextboxNonce.Text);
+        }
+
+        private void TextboxPreviousHash_LostFocus(object sender, RoutedEventArgs e)
+        {
+            this.bloq.PreviousHash = this.TextboxPreviousHash.Text;
+
+        }
+
+        private void ButtonRemine_Click(object sender, RoutedEventArgs e)
+        {
+            this.bloq.Mine(3);
+            this.TextboxHash.Text = this.bloq.Hash;
         }
     }
 }

@@ -15,6 +15,14 @@ namespace Sjerrul.Bloqchain.Ledger
         public string Hash { get; set; }
         public string PreviousHash { get; set; }
         public bool IsGenesisBloq => this.PreviousHash == BloqHashing.GetGenesisHash();
+        public bool IsValid
+        {
+            get
+            {
+                return this.Hash == this.CalculateHash();
+            }
+
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Bloq{T}"/> class as a GenesisBloq.
