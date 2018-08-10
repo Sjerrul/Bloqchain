@@ -9,6 +9,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sjerrul.Bloqchain.Ledger.Te
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sjerrul.Bloqchain.ConsoleDriver", "Sjerrul.Bloqchain.ConsoleDriver\Sjerrul.Bloqchain.ConsoleDriver.csproj", "{6F214826-8DAC-46CC-AA10-869A50C6ADB0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sjerrul.Bloqchain.Demo", "Sjerrul.Bloqchain.Demo\Sjerrul.Bloqchain.Demo.csproj", "{226F98E7-6734-4579-A52D-98EDDBEF1846}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Applications", "Applications", "{5CB29BBC-4117-4AF1-B17E-5059CAB140C8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{46127145-5D8B-4785-8FD7-3BF6ABA40A42}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{A21CFCFE-8A92-44A8-B9D5-6AA942E85A06}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,9 +77,31 @@ Global
 		{6F214826-8DAC-46CC-AA10-869A50C6ADB0}.Release|x64.Build.0 = Release|Any CPU
 		{6F214826-8DAC-46CC-AA10-869A50C6ADB0}.Release|x86.ActiveCfg = Release|Any CPU
 		{6F214826-8DAC-46CC-AA10-869A50C6ADB0}.Release|x86.Build.0 = Release|Any CPU
+		{226F98E7-6734-4579-A52D-98EDDBEF1846}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{226F98E7-6734-4579-A52D-98EDDBEF1846}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{226F98E7-6734-4579-A52D-98EDDBEF1846}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{226F98E7-6734-4579-A52D-98EDDBEF1846}.Debug|ARM.Build.0 = Debug|Any CPU
+		{226F98E7-6734-4579-A52D-98EDDBEF1846}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{226F98E7-6734-4579-A52D-98EDDBEF1846}.Debug|x64.Build.0 = Debug|Any CPU
+		{226F98E7-6734-4579-A52D-98EDDBEF1846}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{226F98E7-6734-4579-A52D-98EDDBEF1846}.Debug|x86.Build.0 = Debug|Any CPU
+		{226F98E7-6734-4579-A52D-98EDDBEF1846}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{226F98E7-6734-4579-A52D-98EDDBEF1846}.Release|Any CPU.Build.0 = Release|Any CPU
+		{226F98E7-6734-4579-A52D-98EDDBEF1846}.Release|ARM.ActiveCfg = Release|Any CPU
+		{226F98E7-6734-4579-A52D-98EDDBEF1846}.Release|ARM.Build.0 = Release|Any CPU
+		{226F98E7-6734-4579-A52D-98EDDBEF1846}.Release|x64.ActiveCfg = Release|Any CPU
+		{226F98E7-6734-4579-A52D-98EDDBEF1846}.Release|x64.Build.0 = Release|Any CPU
+		{226F98E7-6734-4579-A52D-98EDDBEF1846}.Release|x86.ActiveCfg = Release|Any CPU
+		{226F98E7-6734-4579-A52D-98EDDBEF1846}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{1C7C77F8-42A8-4581-8999-F58AE11F6B83} = {46127145-5D8B-4785-8FD7-3BF6ABA40A42}
+		{3AE88BBD-1B48-4575-A5E9-05DC2BBB11E7} = {A21CFCFE-8A92-44A8-B9D5-6AA942E85A06}
+		{6F214826-8DAC-46CC-AA10-869A50C6ADB0} = {5CB29BBC-4117-4AF1-B17E-5059CAB140C8}
+		{226F98E7-6734-4579-A52D-98EDDBEF1846} = {5CB29BBC-4117-4AF1-B17E-5059CAB140C8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6B4C7318-502A-40CC-846E-32E3F1A281D9}
